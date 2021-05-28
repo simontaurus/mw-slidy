@@ -1,5 +1,7 @@
 __NOTOC__
 
+=> DevBranch to load styles and logo from mediawiki directly
+
 == Version ==
 
 mw-slidy v0.1   <br/>
