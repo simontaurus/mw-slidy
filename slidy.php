@@ -90,7 +90,8 @@ class slidyShow
 		 	$this->sTitle = $slidyTitle->getFullText();
 			$slidyArticle = new Article( $slidyTitle );
 			$this->ts = $slidyArticle->getTimestamp();
-			$this->mContent = $slidyArticle->getContent(0);
+			//$this->mContent = $slidyArticle->getContent(0); //Deprecated
+			$this->mContent = $slidyArticle->getPage()->getContent()->getNativeData(); //https://www.mediawiki.org/wiki/Manual:$wgArticle
 			$this->setStyle($style);
 			$this->slidyParser();
 		}else{
@@ -200,7 +201,8 @@ class slidyShow
         foreach(array_keys($slidy_args) as $key) {
             $k = ucfirst($key);
             array_push($page_search, "[slidy$k]");
-            print "page_search = " + join(" ",$page_search);
+            //print "page_search = " + join(" ",$page_search);
+	    print "page_search = " . join(" ",$page_search);
             array_push($page_replace, $slidy_args[$key]);
         }
         
