@@ -91,9 +91,13 @@ class slidyShow
 			$slidyArticle = new Article( $slidyTitle );
 			$this->ts = $slidyArticle->getTimestamp();
 			//$this->mContent = $slidyArticle->getContent(0); //Deprecated
-			$this->mContent = $slidyArticle->getPage()->getContent()->getNativeData(); //https://www.mediawiki.org/wiki/Manual:$wgArticle
-			$this->setStyle($style);
-			$this->slidyParser();
+			$content =  $slidyArticle->getPage()->getContent();
+			if (!is_null($content)) {
+				$this->mContent = $slidyArticle->getPage()->getContent()->getNativeData(); //https://www.mediawiki.org/wiki/Manual:$wgArticle
+				$this->setStyle($style);
+				$this->slidyParser();
+			}
+			else return; //page is empty
 		}else{
 			wfDebug("Slidy: Error! Pass a title object, NOT a title string!\n");
 		}
