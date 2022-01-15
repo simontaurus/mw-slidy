@@ -85,7 +85,7 @@ class slidyShow
  	var $ts;
 
 	function __construct($slidyTitle, $style = 'default', $args = null){
-		
+		global $wgUser;
 		if(is_object($slidyTitle)){
 		 	$this->sTitle = $slidyTitle->getFullText();
 			$slidyArticle = new Article( $slidyTitle );
@@ -93,7 +93,12 @@ class slidyShow
 			//$this->mContent = $slidyArticle->getContent(0); //Deprecated
 			$content =  $slidyArticle->getPage()->getContent();
 			if (!is_null($content)) {
-				$this->mContent = $slidyArticle->getPage()->getContent()->getNativeData(); //https://www.mediawiki.org/wiki/Manual:$wgArticle
+				//$this->mContent = $slidyArticle->getPage()->getContent()->getNativeData(); //https://www.mediawiki.org/wiki/Manual:$wgArticle
+                                $this->mContent = $slidyArticle->getPage()->getContent()->getText(); //https://www.mediawiki.org/wiki/Manual:$wgArticle
+                                $nt = Title::newFromText( $this->sTitle );
+                                $options = ParserOptions::newFromUser( $wgUser );
+                                $fileParser = new Parser;
+                                $this->mContent = $fileParser->preprocess($this->mContent, $nt, $options); 
 				$this->setStyle($style);
 				$this->slidyParser();
 			}
