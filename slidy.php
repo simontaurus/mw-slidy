@@ -95,10 +95,13 @@ class slidyShow
 			if (!is_null($content)) {
 				//$this->mContent = $slidyArticle->getPage()->getContent()->getNativeData(); //https://www.mediawiki.org/wiki/Manual:$wgArticle
                                 $this->mContent = $slidyArticle->getPage()->getContent()->getText(); //https://www.mediawiki.org/wiki/Manual:$wgArticle
+                                #$this->mContent = str_replace('{{#', '{{XXX', $this->mContent);
                                 $nt = Title::newFromText( $this->sTitle );
                                 $options = ParserOptions::newFromUser( $wgUser );
                                 $fileParser = new Parser;
-                                $this->mContent = $fileParser->preprocess($this->mContent, $nt, $options); 
+                                $this->mContent = $fileParser->preprocess($this->mContent, $nt, $options);
+                                #$this->mContent = str_replace('{{XXX', '{{#', $this->mContent);
+                                $this->mContent = $this->mContent . "{{#drawio: drawing_slidy2}}"; 
 				$this->setStyle($style);
 				$this->slidyParser();
 			}
