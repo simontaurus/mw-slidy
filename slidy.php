@@ -45,7 +45,7 @@ function setupSlidyShow() {
 
 	global $wgParser, $wgRequest;
 
-    $wgParser->setHook( 'slidy', 'renderSlidy' );
+    #$wgParser->setHook( 'slidy', 'renderSlidy' );
 
 	$slidy_title   = $wgRequest->getText('title', false);
 
@@ -101,7 +101,6 @@ class slidyShow
                                 $fileParser = new Parser;
                                 $this->mContent = $fileParser->preprocess($this->mContent, $nt, $options);
                                 #$this->mContent = str_replace('{{XXX', '{{#', $this->mContent);
-                                $this->mContent = $this->mContent . "{{#drawio: drawing_slidy2}}"; 
 				$this->setStyle($style);
 				$this->slidyParser();
 			}
@@ -156,7 +155,8 @@ class slidyShow
 		$fileParser = new Parser;
 		
         $lupchi = array();
-        $fileParser->setHook( 'slidy', 'ceFakeSlidy');
+        #$fileParser->setHook( 'slidy', 'ceFakeSlidy');
+        $fileParser->slidy_args = [];
 		$nt = Title::newFromText( $this->sTitle );
 
 		foreach( $this->mSlidys as $slidy ){
@@ -206,7 +206,7 @@ class slidyShow
         # Fill in some default tags
         if (!isset( $slidy_args["copyright"] ) ) { $slidy_args["copyright"] = ""; }
         # Fill in some default tags
-        if (!isset( $slidy_args["theme"] ) ) { $slidy_args["theme"] = "mediawiki"; }
+        if (!isset( $slidy_args["theme"] ) ) { $slidy_args["theme"] = "default"; }
 
 
         # Fill in all template arguments given in the slidy tag
